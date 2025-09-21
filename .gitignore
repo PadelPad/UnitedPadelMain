@@ -30,3 +30,9 @@ build/
 .env
 .env.*
 !.env.example
+padel-pad-frontend/node_modules/
+padel-pad-frontend/dist/
+padel-pad-frontend/build/
+padel-pad-frontend/.env
+padel-pad-frontend/.env.*
+padel-pad-frontend/!.env.example
