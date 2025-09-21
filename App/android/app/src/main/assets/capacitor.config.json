@@ -1,0 +1,12 @@
+{
+	"appId": "com.unitedpadel.app",
+	"appName": "UnitedPadel",
+	"webDir": "build",
+	"bundledWebRuntime": false,
+	"server": {
+		"androidScheme": "https"
+	},
+	"android": {
+		"allowMixedContent": true
+	}
+}

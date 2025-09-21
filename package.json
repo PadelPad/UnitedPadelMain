@@ -1,0 +1,28 @@
+{
+  "name": "padel-pad",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "echo \"Use: npm run dev:server and npm run dev:frontend\"",
+    "dev:server": "npm --prefix server run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "test:e2e": "npx playwright test",
+    "test:api": "npx playwright test tests/e2e/subscriptions.api.spec.ts",
+    "test:pay": "npx playwright test tests/e2e/checkout.via.api.spec.ts --headed",
+    "test:ui": "npx playwright test tests/e2e/subscriptions.ui.spec.ts --headed",
+    "stripe:listen": "stripe listen --forward-to http://localhost:5000/webhook"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.5.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

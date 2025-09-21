@@ -1,0 +1,1 @@
+import { View, Text } from 'react-native'; export function NotificationItem({item}:{item:any}){return(<View className='p-3 mb-2 rounded-xl bg-neutral-900/70 border border-white/10'><Text className='text-white font-semibold'>{item.type.replaceAll('_',' ')}</Text><Text className='text-white/70 text-xs'>{new Date(item.created_at).toLocaleString()}</Text></View>);}

@@ -1,0 +1,4 @@
+-- Place FULL SQL here or use the standalone supabase_full.sql you downloaded earlier.
+-- 00_schema_and_policies.sql
+-- 10_functions_and_rpcs.sql
+-- 20_seeds.sql

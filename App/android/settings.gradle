@@ -1,0 +1,27 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    // Do NOT enforce repositoriesMode; allow project modules to add their own repos.
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "android"
+
+include(":app")
+
+// Capacitor Android library (lives in node_modules)
+include(":capacitor-android")
+project(":capacitor-android").projectDir = file("../node_modules/@capacitor/android/capacitor")
+
+// Cordova shim that Capacitor generates
+include(":capacitor-cordova-android-plugins")
+project(":capacitor-cordova-android-plugins").projectDir = file("./capacitor-cordova-android-plugins")
