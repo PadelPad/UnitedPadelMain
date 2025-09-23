@@ -1,0 +1,469 @@
+/* Base background */
+.accountPageBackground {
+  min-height: 100vh;
+  background: url('../../assets/padel-bg2.jpg') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+}
+
+/* Card Container */
+.accountCard {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 720px;
+  box-shadow: 0 0 20px rgba(255, 122, 0, 0.3);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Section Headings */
+.accountCard h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #ff7a00;
+  text-align: center;
+}
+
+/* Grouped Settings */
+.settingGroup {
+  margin-bottom: 25px;
+}
+
+.settingGroup label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Input Fields */
+.settingGroup input[type="text"],
+.settingGroup input[type="file"],
+.settingGroup input[type="password"],
+.settingGroup input[type="email"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 15px;
+  transition: border 0.2s ease-in-out;
+}
+
+.settingGroup input:focus {
+  border: 1px solid #ff7a00;
+  outline: none;
+}
+
+/* Buttons */
+.settingBtn {
+  background: #ff7a00;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.settingBtn:hover {
+  background: #ff944d;
+}
+
+/* Save Button */
+.saveBtn {
+  display: block;
+  width: 100%;
+  margin-top: 30px;
+  font-size: 16px;
+}
+
+/* Avatar Styling */
+.avatar-preview {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #ff7a00;
+  margin-bottom: 15px;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(255, 122, 0, 0.4);
+}
+
+.avatar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.avatar-option {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border 0.2s;
+}
+
+.avatar-option:hover {
+  transform: scale(1.1);
+}
+
+.avatar-option.selected {
+  border-color: #ff7a00;
+  box-shadow: 0 0 8px rgba(255, 122, 0, 0.6);
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
+.modal {
+  background: rgba(30, 30, 30, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 100%;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 122, 0, 0.4);
+}
+
+.modal input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.modalActions button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modalActions button:first-child {
+  background-color: #ff7a00;
+  color: white;
+}
+
+.modalActions .cancelBtn {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Toggles */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.4s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background-color: white;
+  left: 4px;
+  bottom: 4px;
+  transition: 0.4s;
+}
+
+.toggle input:checked + .slider {
+  background-color: #ff7a00;
+}
+
+.toggle input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Loader */
+.loader {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Updating Text */
+.updating {
+  text-align: center;
+  font-style: italic;
+  color: #ffae5c;
+  margin-top: 20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .accountCard {
+    padding: 25px;
+  }
+
+  .avatar-grid {
+    justify-content: center;
+  }
+
+  .avatar-option {
+    width: 50px;
+    height: 50px;
+  }
+}
+.cropContainer {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: #111;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cropperModal {
+  max-width: 500px;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+}
+.profileCard { position: sticky; top: 16px; height: fit-content; }
+.sectionRow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 1000px) {
+  .dashboard { grid-template-columns: 1fr; }
+  .sectionRow { grid-template-columns: 1fr; }
+}
+.progressBar { height: 12px; border-radius: 999px; }
+/* Base background */
+.accountPageBackground {
+  min-height: 100vh;
+  background: url('../../assets/padel-bg2.jpg') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+}
+
+/* Card Container */
+.accountCard {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 0 20px rgba(255, 122, 0, 0.3);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.accountCard h2 {
+  font-size: 28px;
+  margin-bottom: 18px;
+  color: #ff7a00;
+  text-align: center;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.tab {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.tab.active {
+  border-color: #ff7a00;
+  box-shadow: 0 0 0 1px #ff7a00 inset, 0 6px 18px rgba(255,122,0,.25);
+}
+.tabPanel { margin-top: 6px; }
+
+/* Grouped Settings */
+.settingGroup { margin-bottom: 22px; }
+.settingGroup label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Inputs */
+.settingGroup input[type="text"],
+.settingGroup input[type="file"],
+.settingGroup input[type="password"],
+.settingGroup input[type="email"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 15px;
+  transition: border 0.2s ease-in-out;
+}
+.settingGroup input:focus {
+  border: 1px solid #ff7a00;
+  outline: none;
+}
+.hint { display:block; margin-top:6px; font-size:12px; opacity:.85 }
+
+/* Buttons */
+.settingBtn {
+  background: #ff7a00;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform .15s ease;
+}
+.settingBtn:hover { background: #ff944d; transform: translateY(-1px); }
+.saveBtn { display:block; width:100%; margin-top: 24px; font-size: 16px; }
+
+/* Avatar */
+.avatar-preview {
+  width: 90px; height: 90px; border-radius: 50%;
+  border: 3px solid #ff7a00; margin-bottom: 15px; object-fit: cover;
+  box-shadow: 0 0 12px rgba(255, 122, 0, 0.4);
+}
+.avatar-grid { display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; }
+.avatar-option {
+  width: 60px; height: 60px; border-radius: 50%; cursor:pointer; object-fit: cover;
+  border: 2px solid transparent; transition: transform .2s, border .2s;
+}
+.avatar-option:hover { transform: scale(1.1); }
+.avatar-option.selected { border-color:#ff7a00; box-shadow: 0 0 8px rgba(255,122,0,.6); }
+
+/* Modal */
+.modalOverlay {
+  position: fixed; inset: 0; background: rgba(10,10,10,.7);
+  display:flex; justify-content:center; align-items:center; z-index:99;
+}
+.modal {
+  background: rgba(30,30,30,.95);
+  padding: 30px; border-radius: 15px; max-width: 480px; width: 100%; color:#fff;
+  box-shadow: 0 0 20px rgba(255,122,0,.4);
+}
+.modal input {
+  width:100%; margin-bottom: 15px; padding: 12px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.05); color: #fff;
+}
+.modalActions { display:flex; justify-content: space-between; gap:10px; }
+.modalActions button { flex:1; padding:10px; border:0; border-radius:8px; cursor:pointer; font-weight:700; }
+.modalActions button:first-child { background:#ff7a00; color:#fff; }
+.modalActions .cancelBtn { background: rgba(255,255,255,.1); color:#fff; }
+
+/* Cropper */
+.cropContainer {
+  position: relative; width: 100%; height: 300px; background:#111;
+  margin-bottom: 15px; border-radius: 12px; overflow: hidden;
+}
+.cropperModal { max-width: 560px; }
+
+/* Toggles */
+.toggle { position:relative; display:inline-block; width: 48px; height:26px; }
+.toggle input { opacity:0; width:0; height:0; }
+.slider {
+  position:absolute; cursor:pointer; background:#ccc; border-radius:34px;
+  inset:0; transition:.4s;
+}
+.slider::before {
+  content:""; position:absolute; height:18px; width:18px; border-radius:50%;
+  background:#fff; left:4px; bottom:4px; transition:.4s;
+}
+.toggle input:checked + .slider { background:#ff7a00; }
+.toggle input:checked + .slider:before { transform: translateX(20px); }
+
+/* Loader & toast */
+.loader { color: #fff; font-size: 20px; text-align:center; margin-top: 40px; }
+.toast {
+  position: fixed; bottom: 18px; right: 18px; padding: 10px 14px;
+  border-radius: 10px; font-weight: 700; z-index: 120;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.toast.success { background: #1e8e3e; }
+.toast.error   { background: #d93025; }
+
+/* Animations */
+@keyframes fadeIn { from { opacity:0; transform: translateY(12px)} to { opacity:1; transform:none } }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .accountCard { padding: 24px }
+  .avatar-grid { justify-content: center; }
+  .avatar-option { width: 50px; height: 50px; }
+}

@@ -1,0 +1,72 @@
+const express = require('express');
+const Stripe = require('stripe');
+const cors = require('cors');
+const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config();
+
+const app = express();
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY // ✅ Must use Service Role Key
+);
+
+// Stripe needs raw body for signature verification
+app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    console.error('Webhook signature verification failed:', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  // ✅ Successful Checkout
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object;
+    const userId = session.metadata?.userId;
+    const priceId = session?.items?.data?.[0]?.price?.id || session?.lines?.data?.[0]?.price?.id || session?.subscription?.items?.data?.[0]?.price?.id;
+
+    if (userId && priceId) {
+      let membership_type;
+
+      // Map Stripe Price IDs to your tiers
+      switch (priceId) {
+        case 'price_1RS0EYRqoRyLHnko82DGyXIy':
+          membership_type = 'basic';
+          break;
+        case 'price_1RS0EYRqoRyLHnkonFfTfBPh':
+          membership_type = 'plus';
+          break;
+        case 'price_1RS0EYRqoRyLHnko5p2Fynd2':
+          membership_type = 'elite';
+          break;
+        default:
+          membership_type = null;
+      }
+
+      if (membership_type) {
+        const { error } = await supabase
+          .from('profiles')
+          .update({ membership_type })
+          .eq('id', userId);
+
+        if (error) {
+          console.error('Error updating Supabase:', error);
+          return res.status(500).send('Failed to update user profile');
+        }
+
+        console.log(`✅ Updated user ${userId} to ${membership_type}`);
+      }
+    }
+  }
+
+  res.status(200).send('Received');
+});

@@ -1,0 +1,29 @@
+/* Apply background to entire legal page */
+body.legal-page {
+  background-image: url('../../assets/padel-bg.jpg');
+  background-size: cover;
+}
+
+/* Main legal container card */
+.legal-container {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95); /* slightly transparent white */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  font-family: 'Inter', sans-serif;
+  color: #333;
+}
+
+.legal-container h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #ff6600;
+}
+
+.legal-container p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}

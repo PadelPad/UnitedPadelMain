@@ -1,0 +1,25 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.58);
+  border-radius: 14px;
+  border: 1px dashed rgba(255,255,255,.3);
+  cursor: pointer;
+  backdrop-filter: blur(2px);
+}
+.inner { text-align: center; color: #fff; }
+.icon { display: block; font-size: 1.2rem; margin-bottom: .25rem; }
+.btn {
+  margin-top: .45rem;
+  background: #f97316;
+  color: #111;
+  border: 0;
+  border-radius: 999px;
+  padding: .45rem .9rem;
+  font-weight: 800;
+}
+.btn:hover { filter: brightness(1.05); }

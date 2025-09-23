@@ -1,0 +1,50 @@
+/* 🌟 Podium Section */
+
+.podium-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  z-index: 2;
+  position: relative;
+}
+
+.podium-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.podium-step.first {
+  transform: translateY(-40px);
+  z-index: 3;
+}
+.podium-step.second {
+  transform: translateY(-20px);
+  z-index: 2;
+}
+.podium-step.third {
+  transform: translateY(0px);
+  z-index: 1;
+}
+
+.podium-step .flip-container {
+  width: 280px;
+  height: 390px;
+}
+
+/* 🟠 Glowing Base Ring */
+.glow-ring {
+  position: absolute;
+  bottom: -30px;
+  width: 180px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,110,0,0.4) 0%, transparent 70%);
+  filter: blur(8px);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+}

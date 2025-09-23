@@ -1,0 +1,731 @@
+/* 🔥 Background + Layout */
+.leaderboard-page {
+  min-height: 100vh;
+  background-image: url('../../assets/padel-bg2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.leaderboard-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(to right, #fcd34d, #f59e0b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  margin-bottom: 2rem;
+}
+
+/* 🏅 Podium */
+.podium-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-top: 4rem; /* 👈 added spacing between filters and podium */
+  z-index: 1;
+  position: relative;
+}
+.podium-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+.podium-step.first { transform: translateY(-20px); }
+.podium-step.second { transform: translateY(-10px); }
+.podium-step.third { transform: translateY(0); }
+.podium-wrapper .avatar-img {
+  margin-top: 0.25rem;
+}
+
+/* 🌀 Flip Animation */
+.flip-container {
+  perspective: 1500px;
+  width: 280px;
+  height: 390px;
+  cursor: pointer;
+}
+.flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+}
+.flip-container.flipped .flipper {
+  transform: rotateY(180deg);
+}
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+}
+.back {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background-image: url('../../assets/card-bg.jpg');
+  background-size: 119%;
+  background-position: center 41%;
+  background-repeat: no-repeat;
+  padding: 0.5rem;
+  color: #fff;
+  font-size: 9.25px;
+  line-height: 1.2;
+  font-family: 'Orbitron', 'Segoe UI', sans-serif;
+  width: 280px;
+  height: 390px;
+  box-sizing: border-box;
+}
+
+/* 🔶 Orange Border (Edge-safe) */
+.card-front::before,
+.card-back::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border: 2px solid rgba(255, 153, 0, 0.9);
+  border-radius: 18px;
+  box-shadow: 0 0 10px rgba(255, 122, 0, 0.4);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.card-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.6rem 0 0.25rem; /* Top margin added */
+  position: relative;
+}
+
+.card-avatar .avatar-img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 153, 0, 0.9);
+  box-shadow: 0 0 8px rgba(255, 122, 0, 0.6);
+}
+
+.card-rank {
+  position: absolute;
+  top: 28px;     /* Moved down */
+  right: 16px;    /* Moved left */
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+/* Text Info */
+.username {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0.25rem 0 0.15rem;
+}
+.club-info {
+  text-align: center;
+  font-size: 0.72rem;
+  opacity: 0.85;
+  margin-bottom: 0.3rem;
+}
+.badges-preview,
+.last-played,
+.premium-tag {
+  font-size: 1rem;
+  text-align: center;
+  opacity: 0.85;
+  margin-top: 0.4rem;
+}
+.premium-tag {
+  color: gold;
+  font-weight: 600;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 0.6rem; /* Increased vertical space between stat rows */
+  column-gap: 0.3rem;
+  margin: 0.6rem 0; /* Slightly more space above and below */
+}
+
+.stat-box {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 0.8rem 1rem; /* More vertical padding */
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.25;
+}
+
+/* Grid & Loading */
+.leaderboard-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1300px;
+}
+.leaderboard-loading {
+  font-size: 1.25rem;
+  color: white;
+  opacity: 0.8;
+  animation: pulse 1.5s infinite ease-in-out;
+  text-align: center;
+}
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* 🧪 XP Bar */
+.xp-section {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.xp-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #a3e635);
+}
+.xp-text {
+  font-size: 0.7rem;
+  color: #fff;
+  opacity: 0.8;
+  margin-top: 0.2rem;
+}
+
+/* 📊 Elo Chart */
+.elo-history .chart-title {
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+.chart-container {
+  height: 80px;
+}
+
+/* 🕹️ Recent Match Results */
+.recent-matches .chart-title {
+  font-size: 0.8rem;
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+.match-results-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+}
+.match-result {
+  width: 20px;
+  height: 20px;
+  font-size: 0.7rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.match-result.win {
+  background: #4ade80;
+  color: #000;
+}
+.match-result.loss {
+  background: #f87171;
+  color: #000;
+}
+
+/* 🔮 Upcoming Badge */
+.upcoming-badge {
+  font-size: 0.7rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.4rem;
+  border-radius: 8px;
+}
+.badge-name {
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-top: 0.2rem;
+}
+.badge-desc {
+  font-size: 0.65rem;
+  opacity: 0.8;
+  margin-top: 0.2rem;
+}
+.leaderboard-page {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  padding: 80px 20px;
+  min-height: 100vh;
+  z-index: 0;
+}
+
+.leaderboard-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 110, 0, 0.2);
+  backdrop-filter: blur(6px);
+  z-index: 0;
+}
+
+.leaderboard-title {
+  text-align: center;
+  color: white;
+  font-size: 2.5rem;
+  z-index: 2;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 40px;
+  z-index: 2;
+  position: relative;
+}
+
+.filters-bar select,
+.reset-button {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover,
+.filters-bar select:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+/* 🟠 Glowing Podium Ring (Under Cards) */
+.glow-ring {
+  position: absolute;
+  bottom: -30px;
+  width: 180px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,110,0,0.5) 0%, transparent 70%);
+  filter: blur(8px);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+}
+.filters-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  z-index: 2;
+  position: relative;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 0 15px rgba(255, 165, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* 🏆 Modern Podium Layout */
+.podium-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  z-index: 2;
+  position: relative;
+}
+
+.podium-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.podium-step.first {
+  transform: translateY(-40px);
+  z-index: 3;
+}
+.podium-step.second {
+  transform: translateY(-20px);
+  z-index: 2;
+}
+.podium-step.third {
+  transform: translateY(0px);
+  z-index: 1;
+}
+/* 🌟 Podium Styling */
+.podium-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  z-index: 2;
+  position: relative;
+}
+.podium-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.podium-step.first { transform: translateY(-40px); z-index: 3; }
+.podium-step.second { transform: translateY(-20px); z-index: 2; }
+.podium-step.third { transform: translateY(0px); z-index: 1; }
+
+.glow-ring {
+  position: absolute;
+  bottom: -30px;
+  width: 180px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,110,0,0.4) 0%, transparent 70%);
+  filter: blur(8px);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.mini-card-wrapper {
+  width: 180px;
+  background: linear-gradient(145deg, #2a0d00, #ff5e0e1a);
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: 0 0 6px #f97316;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.mini-card-wrapper:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px #ff7a18;
+}
+.mini-card-wrapper.highlighted {
+  outline: 2px solid #facc15;
+  box-shadow: 0 0 14px 4px #facc15;
+}
+
+.mini-card-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mini-avatar-container {
+  flex-shrink: 0;
+}
+.mini-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #f97316;
+}
+.mini-info {
+  display: flex;
+  flex-direction: column;
+}
+.mini-username {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.mini-rank {
+  font-size: 0.8rem;
+  color: #facc15;
+}
+
+.mini-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: #ffedd5;
+}
+.minicard-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+/* Full Card Modal */
+.full-card-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-inner {
+  position: relative;
+}
+.close-modal-btn {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  font-size: 18px;
+}
+.close-modal-btn:hover {
+  background: #fb923c;
+}
+@keyframes fadeIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ========== Pagination ========== */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.page-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  padding: 0.5rem 0.9rem;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.page-btn.active {
+  background: #f97316;
+  color: black;
+}
+.page-btn.special {
+  background: rgba(255, 255, 255, 0.25);
+  font-style: italic;
+}
+.ellipsis {
+  padding: 0.5rem;
+  color: white;
+  font-weight: bold;
+}
+/* ⭐ Highlighted User */
+.highlighted-card-section {
+  margin-top: 3rem;
+  text-align: center;
+}
+.highlighted-label {
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+}
+
+.filter-row select,
+.filter-row .reset-button {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  border: 2px solid orange;
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  min-width: 150px;
+  transition: all 0.3s ease;
+}
+
+.filter-row select:hover,
+.filter-row .reset-button:hover {
+  background-color: orange;
+  color: black;
+  cursor: pointer;
+  transform: scale(1.03);
+}
+
+.filter-row select:focus {
+  outline: none;
+  border-color: gold;
+  box-shadow: 0 0 10px gold;
+}
+
+.filter-row .reset-button {
+  background: #fff;
+  color: #fff;
+  font-weight: bold;
+}
+
+.filter-label {
+  color: white;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  text-shadow: 0 0 4px rgba(255, 165, 0, 0.7);
+}
+
+.leaderboard-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.trophy-icon {
+  color: gold;
+  filter: drop-shadow(0 0 6px orange);
+  animation: pulseGlow 2s infinite;
+}
+
+.leaderboard-heading-text {
+  font-size: 2.6rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #ffa500, #ffd700);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(255, 140, 0, 0.6);
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px orange);
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 12px gold);
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px orange);
+  }
+}
+.podium-rank-icon {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 3;
+}
+
+.sparkle-anim {
+  animation: sparkleFade 1.5s infinite ease-in-out;
+  color: gold;
+}
+
+@keyframes sparkleFade {
+  0% { opacity: 0; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(20deg); }
+  100% { opacity: 0; transform: scale(0.8) rotate(0deg); }
+}
+@media (max-width: 768px) {
+  .filters-row {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .leaderboard-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .minicard-row {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .leaderboard-heading-text {
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+.filter-icon {
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.flip-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flip-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(255, 165, 0, 0.6);
+}

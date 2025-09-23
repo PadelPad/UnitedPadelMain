@@ -1,0 +1,568 @@
+/* ==========================================================================
+   Root Variables
+   ========================================================================== */
+:root {
+  --orange-700: #c2410c;
+  --orange-600: #ea580c;
+  --orange-500: #ff4b2b;
+  --orange-400: #ff6f3f;
+  --orange-300: #ff944d;
+  --text-dark: #1a202c;
+  --text-light: #6b7280;
+  --bg-glass: rgba(255, 255, 255, 0.6);
+  --frost: blur(8px);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.25);
+  --marble: var(--marble-url); /* ✅ injected from React */
+}
+
+/* ==========================================================================
+   Tournament Card Grid
+   ========================================================================== */
+.tournament-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+/* ==========================================================================
+   Tournament Card
+   ========================================================================== */
+.tournament-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  /* background-image: (removed) — set in JSX inline */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid var(--orange-500);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.tournament-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.tournament-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+}
+
+.tournament-card.upcoming::before { background: var(--orange-300); }
+.tournament-card.ongoing::before  { background: var(--orange-500); }
+.tournament-card.finished::before { background: var(--text-light); }
+/* ==========================================================================
+   Card Poster Banner
+   ========================================================================== */
+.card-banner {
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   Card Content Area
+   IMPORTANT: You asked for no overlay—so background is transparent and no blur.
+   ========================================================================== */
+.card-content {
+  position: relative;
+  padding: 1rem 1.25rem;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  background: transparent;          /* <-- no overlay */
+  backdrop-filter: none;            /* <-- no blur */
+  -webkit-backdrop-filter: none;    /* <-- no blur */
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+/* Header & Title */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* subtle lift on marble */
+}
+
+/* Badges */
+.card-badges {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.4rem;
+  z-index: 10;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  background: var(--orange-600);
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  animation: floatBadge 2s ease-in-out infinite alternate;
+}
+.badge.fire   { background: var(--orange-400); }
+.badge.winner { background: linear-gradient(135deg, gold, goldenrod); color: #1a1a1a; }
+
+@keyframes floatBadge {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(-2px); }
+}
+
+/* Meta (date/location) */
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  margin: 0.5rem 0;
+  color: var(--text-dark);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Description */
+.card-desc {
+  margin-top: auto;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-dark);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 600px) {
+  .card-content { padding: 0.85rem; }
+  .card-title   { font-size: 1.1rem; }
+  .badge        { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
+  .card-banner  { height: 120px; }
+}
+
+/* ==========================================================================
+   Wizard Container
+   ========================================================================== */
+.tournaments-page {
+  background: url('../../assets/padel-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  padding: 2rem 1rem;
+}
+
+.create-tournament {
+  max-width: 720px;
+  margin: 0 auto 3rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.create-tournament-header {
+  background: linear-gradient(135deg, var(--orange-600), var(--orange-500));
+  color: white;
+  padding: 1.5rem;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Wizard Body & Progress Bar
+   ========================================================================== */
+.create-tournament-body {
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.progress-filled {
+  height: 100%;
+  background: linear-gradient(90deg, var(--orange-400), var(--orange-500));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ==========================================================================
+   Inputs & Selects
+   ========================================================================== */
+.wizard-form input,
+.wizard-form select,
+.wizard-form textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--orange-400);
+  background: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.wizard-form input:focus,
+.wizard-form select:focus,
+.wizard-form textarea:focus {
+  outline: none;
+  border-color: var(--orange-600);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
+}
+
+/* ==========================================================================
+   Wizard Buttons
+   ========================================================================== */
+.wizard-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.wizard-buttons button {
+  flex: 1;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: var(--orange-500);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.15s ease;
+}
+
+.wizard-buttons button:hover:not(:disabled) {
+  background: var(--orange-600);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Poster Preview
+   ========================================================================== */
+.poster-preview {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  margin-top: 0.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   Controls Bar / Segmented Tabs (new)
+   ========================================================================== */
+.controls-bar {
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+.segmented-tabs {
+  position: relative;
+  display: inline-flex;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(0,0,0,0.05);
+  padding: 0.35rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.segmented-tab {
+  position: relative;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 700;
+  color: #0f172a;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.segmented-tab .tab-icon { opacity: 0.9; }
+.segmented-tab .tab-label { position: relative; z-index: 2; }
+
+.segmented-tab.active {
+  color: white;
+}
+
+.segmented-tab .segmented-pill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--orange-500), var(--orange-700));
+  border-radius: 999px;
+  z-index: 1;
+  box-shadow: 0 8px 20px rgba(234,88,12,0.35);
+}
+
+/* Search */
+.tournament-search input[type="search"] {
+  width: 280px;
+  max-width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.tournament-search input[type="search"]:focus {
+  outline: none;
+  border-color: var(--orange-500);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18);
+}
+
+/* ==========================================================================
+   Tournament Overview
+   ========================================================================== */
+.tournament-overview {
+  max-width: 780px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #f8fafc;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+  background-image: url('../../assets/padel-bg2.jpg');
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.tournament-overview h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--orange-400);
+  text-align: center;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.tournament-overview .date-location {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #e2e8f0;
+  margin-bottom: 2rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.countdown {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--orange-400);
+  font-weight: 600;
+  font-size: 1rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+.tournament-overview section { margin-bottom: 2rem; }
+.tournament-overview h3 { font-size: 1.4rem; color: var(--orange-400); margin-bottom: 0.5rem; }
+.tournament-overview p  { font-size: 1rem; line-height: 1.6; color: #f1f5f9; }
+
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.95rem;
+  border: none;
+  background: var(--orange-500);
+  color: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.back-btn:hover { background: var(--orange-600); }
+
+/* ==========================================================================
+   Fixtures Display
+   ========================================================================== */
+.fixture-list {
+  margin-top: 3rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.5s ease;
+}
+
+.fixture-round { margin-bottom: 3rem; }
+
+.fixture-round h3 {
+  font-size: 1.8rem;
+  color: var(--orange-500);
+  margin-bottom: 1rem;
+  border-bottom: 3px solid var(--orange-400);
+  padding-bottom: 0.4rem;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+}
+
+/* Match Card */
+.fixture-card {
+  background-image: var(--marble); /* ✅ use the same marble texture */
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--orange-400);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.2s ease;
+}
+.fixture-card:hover { transform: scale(1.015); }
+
+/* Teams */
+.fixture-teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.fixture-team {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.fixture-player {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.9);
+  background: rgba(255,255,255,0.75);
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.6rem;
+  backdrop-filter: blur(3px);
+}
+
+.fixture-player img {
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  border: 2px solid var(--orange-500);
+  object-fit: cover;
+}
+
+/* VS Divider */
+.vs {
+  font-weight: bold;
+  color: var(--orange-600);
+  font-size: 1.4rem;
+  margin: 0 1.2rem;
+}
+
+/* Fixture Details */
+.fixture-details { display: flex; flex-direction: column; gap: 0.5rem; }
+.fixture-date    { font-size: 0.9rem; color: var(--text-light); font-weight: 500; }
+.fixture-result  { font-size: 1rem; font-weight: 600; color: #333; }
+.winner          { color: var(--orange-600); font-weight: 700; }
+
+/* Admin Controls */
+.admin-controls {
+  background: rgba(255,255,255,0.85);
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  border: 1px solid var(--orange-300);
+}
+
+.admin-controls input,
+.admin-controls select {
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--orange-400);
+  width: 100%;
+}
+
+.admin-controls button {
+  background: var(--orange-600);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.admin-controls button:hover { background: var(--orange-700); }
+
+/* Empty states */
+.no-results { text-align: center; color: #888; font-style: italic; margin-top: 2rem; }
+.loading    { text-align: center; font-weight: 600; color: var(--orange-600); margin-top: 2rem; }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .controls-bar { grid-template-columns: 1fr; }
+  .fixture-teams { flex-direction: column; align-items: center; }
+  .vs { margin: 0.8rem 0; }
+  .fixture-player img { width: 28px; height: 28px; }
+}
+
