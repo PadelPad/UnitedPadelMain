@@ -1,9 +1,0 @@
-{
-  "applinks": {
-    "apps": [],
-    "details": [{
-      "appID": "TEAMID.com.unitedpadel.app",
-      "paths": [ "/auth/callback*", "/match/*", "/tournament/*", "/profile/*" ]
-    }]
-  }
-}

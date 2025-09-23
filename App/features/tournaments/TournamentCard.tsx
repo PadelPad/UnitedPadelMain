@@ -1,1 +1,0 @@
-import { View, Text } from 'react-native'; export function TournamentCard({tournament}:{tournament:any}){return(<View className='p-3 mb-2 rounded-xl bg-neutral-900/70 border border-white/10'><Text className='text-white font-semibold'>{tournament.name}</Text><Text className='text-white/70'>{(tournament.type||'event')} · {tournament.start_date||'TBA'}</Text></View>);}
